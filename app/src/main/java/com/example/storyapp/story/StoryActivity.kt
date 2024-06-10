@@ -8,6 +8,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.storyapp.LoadingStateAdapter
 import com.example.storyapp.R
 import com.example.storyapp.StoryAdapter
 import com.example.storyapp.ViewModelFactory
@@ -38,32 +39,26 @@ class StoryActivity : AppCompatActivity() {
         )
 
         dataViewModel.getTokenKey().observe(this){
-            val storyViewModel = ViewModelProvider(this@StoryActivity, ViewModelFactory(this, it, pref)).get(
-                StoryViewModel::class.java
-            )
+            Log.d(TAG, it)
+        }
 
-            storyViewModel.getValid().observe(this){isValid->
-                if(isValid){
-                    storyViewModel.getTokenKey().observe(this){
-                        Log.d(TAG, it)
+        dataViewModel.getValid().observe(this){isValid->
+            if(isValid){
+                dataViewModel.getTokenKey().observe(this){
+                    Log.d(TAG, it)
 //                    getStories(it)
-                    }
-                }else{
-                    val intentWelcome = Intent(this@StoryActivity, WelcomeActivity::class.java)
-                    startActivity(intentWelcome)
                 }
-            }
-
-            storyViewModel.getTokenKey().observe(this){
-                Log.d(TAG, it)
-            }
-
-            binding.fabLogout.setOnClickListener {
-                storyViewModel.setValid(false)
-                storyViewModel.setTokenKey("")
+            }else{
                 val intentWelcome = Intent(this@StoryActivity, WelcomeActivity::class.java)
                 startActivity(intentWelcome)
             }
+        }
+
+        binding.fabLogout.setOnClickListener {
+            dataViewModel.setValid(false)
+            dataViewModel.setTokenKey("")
+            val intentWelcome = Intent(this@StoryActivity, WelcomeActivity::class.java)
+            startActivity(intentWelcome)
         }
 
 
@@ -164,7 +159,11 @@ class StoryActivity : AppCompatActivity() {
 
 
             val adapter = StoryAdapter()
-            binding.rvStory.adapter = adapter
+            binding.rvStory.adapter = adapter.withLoadStateFooter(
+                footer = LoadingStateAdapter {
+                    adapter.retry()
+                }
+            )
             storyViewModel.stories.observe(this) {listStory->
                 Log.d(TAG, "paging data: ${listStory.toString()}")
                 adapter.submitData(lifecycle, listStory )

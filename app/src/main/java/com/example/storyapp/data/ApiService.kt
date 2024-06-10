@@ -37,10 +37,10 @@ interface ApiService {
     ): Call<LoginResponse>
 
     @GET("stories")
-    fun getstories(
+    suspend fun getstories(
         @Query("page") page: Int = 1,
         @Query("size") size: Int = 20
-    ): List<ListStoryItem>
+    ): StoryResponse
 
     @Multipart
     @POST("stories")

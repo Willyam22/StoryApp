@@ -18,6 +18,9 @@ data class StoryResponse(
 
 @Entity(tableName = "story")
 data class ListStoryItem(
+	@PrimaryKey
+	@field:SerializedName("id")
+	val id: String,
 
 	@field:SerializedName("photoUrl")
 	val photoUrl: String? = null,
@@ -34,9 +37,6 @@ data class ListStoryItem(
 	@field:SerializedName("lon")
 	val lon: Double? = null,
 
-	@PrimaryKey
-	@field:SerializedName("id")
-	val id: String,
 
 	@field:SerializedName("lat")
 	val lat: Double? = null

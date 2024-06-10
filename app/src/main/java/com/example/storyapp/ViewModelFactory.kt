@@ -19,7 +19,7 @@ class ViewModelFactory(private val context: Context, private val auth: String, p
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(pref) as T
         }else if(modelClass.isAssignableFrom(StoryViewModel::class.java)){
-            return StoryViewModel(Injection.provideRepository(context, auth),pref) as T
+            return StoryViewModel(Injection.provideRepository(context, auth)) as T
         }else if(modelClass.isAssignableFrom(UploadViewModel::class.java)) {
             return UploadViewModel(pref) as T
         }else if(modelClass.isAssignableFrom(DetailViewModel::class.java)) {

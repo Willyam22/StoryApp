@@ -13,6 +13,7 @@
     <string name="upload">upload</string>
     <string name="menu_2">maps</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="retry">Coba lagi</string>
 
 
 </resources>

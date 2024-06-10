@@ -44,6 +44,7 @@ android {
 
 dependencies {
     implementation(libs.play.services.maps)
+    implementation(libs.androidx.ui.desktop)
     val cameraxVersion = "1.2.3"
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -74,4 +75,12 @@ dependencies {
     implementation(libs.androidx.room.ktx)
 
     ksp(libs.room.compiler)
+
+    androidTestImplementation(libs.androidx.core.testing) //InstantTaskExecutorRule
+    androidTestImplementation(libs.kotlinx.coroutines.test) //TestDispatcher
+
+    testImplementation(libs.androidx.core.testing) // InstantTaskExecutorRule
+    testImplementation(libs.kotlinx.coroutines.test) //TestDispatcher
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.inline)
 }
